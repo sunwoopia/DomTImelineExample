@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html lang="kr">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
     <title>TimelineExample</title>
 </head>
 <body>
+    <div class="container">
+        <textarea id="" cols="38" rows="18"></textarea>
+        <button onclick="postClick()">글 쓰기</button>
+    </div>
+    <div id="timeline"></div>
+    <script>
+        let postInput = document.querySelector("textarea");
+        let timeline = document.querySelector("#timeline");
 
+        window.onload = async () => {
+            const postResponse = await fetch('http://ec2-52-78-131-251.ap-northeast-2.compute.amazonaws.com/feed/', {
+                method: 'get',
+            });
+            const posts = await postResponse.json();
+
+            for (let i = 0; i < posts.length; i++) {
+                post(posts[i].owner, posts[i].content);
+            }
+        }
+        const postClick = () => {
+            post('owner', postInput.value);
+        };
+        const post = (name, description) => {
+            // if (postInput.value == "") alert("내용을 작성해주세요")
+            let container = document.createElement('div');
+            let owner = document.createElement('h1');
+            let content = document.createElement('p');
+            owner.appendChild(document.createTextNode(name));
+            content.appendChild(document.createTextNode(description));
+            container.setAttribute('class', 'container');
+            container.appendChild(owner);
+            container.appendChild(content);
+
+            timeline.appendChild(container);
+
+        };
+    </script>
 </body>
+
 </html>
