@@ -10,6 +10,7 @@
         <textarea id="" cols="38" rows="18"></textarea>
         <button onclick="postClick()">글 쓰기</button>
     </div>
+
     <div id="timeline"></div>
     <script>
         let postInput = document.querySelector("textarea");
@@ -38,9 +39,7 @@
             container.setAttribute('class', 'container');
             container.appendChild(owner);
             container.appendChild(content);
-
             timeline.appendChild(container);
-
         };
     </script>
 </body>
